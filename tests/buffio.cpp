@@ -7,7 +7,7 @@
 
 int main(void)
 {
-    const std::string m_full_path = "/data1/apache2/config/dict/all_exempt.dict";
+    const std::string m_full_path = "/foo/bar.dict";
 
     std::fstream f(m_full_path, std::fstream::in);
 

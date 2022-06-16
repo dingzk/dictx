@@ -48,7 +48,7 @@ dictx.directory = "/foo"
 // find($key [, $noreload = 0]); //$noreload默认为0代表会自动触发词典更新机制，传1不触发词典更新机制
 
 // 标准用法如下：
-$dict = new Dictx("/data1/apache2/config/dict/all_exempt.dict");
+$dict = new Dictx("/foo/bar.dict");
 $b = $dict->find("1004891963"); // 没有加载过的词典这里会主动触发加载，
 // 不管参数怎么传find之前自动强制加载词典(建议性锁)，已经加载过不会重复加载
 var_dump($b);

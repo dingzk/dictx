@@ -65,7 +65,7 @@ void test_process(const char *full_path) {
 
 int main(void)
 {
-    const char * full_path = "/data1/apache2/config/dict/all_exempt.dict";
+    const char * full_path = "/foo/bar.dict";
 //    int ret = dict_load(full_path);
 //    std::cout << ret << std::endl;
 

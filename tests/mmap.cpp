@@ -12,7 +12,7 @@
 #include <string>
 
 int main(void) {
-    const std::string m_full_path = "/data1/apache2/config/dict/all_exempt.dict";
+    const std::string m_full_path = "/foo/bar.dict";
 
     int fd = open(m_full_path.c_str(), O_RDONLY);
     if (fd < 0) {

@@ -12,7 +12,7 @@ foreach($functions as $func) {
 }
 
 
-$dict = new Dictx("/data1/apache2/config/dict/all_exempt.dict");
+$dict = new Dictx("/foo/bar.dict");
 $b = $dict->find("50000");
 // $b = $dict->find("1004891963", 1); // 不触发reload机制
 var_dump($b);
