@@ -9,7 +9,7 @@
 #include <cstring>
 #include <iostream>
 
-#define MAX_KEY_LEN                 (16)
+#define MAX_KEY_LEN                 (64)
 
 #define STORAGE_FACTOR              (1)
 #define MEM_ALIGNMENT               8
