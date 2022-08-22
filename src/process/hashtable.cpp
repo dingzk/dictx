@@ -234,11 +234,11 @@ Hash *Hasher::getHashAddr() {
     return m_ht;
 }
 
-void *Hasher::alloc_mem(uint32_t size) {
+void *Hasher::alloc_mem(size_t size) {
     if (!Gseg || Gseg->free < size || size == 0) {
         return NULL;
     }
-    uint32_t pos = Gseg->pos;
+    size_t pos = Gseg->pos;
     Gseg->free -= size;
     Gseg->pos += size;
 
@@ -322,7 +322,7 @@ bool Hasher::update_bucket(Hash *ht, Bucket *p, const char *data, uint32_t data_
     return true;
 }
 
-bool Hasher::init(uint32_t alloc_size, uint32_t table_size) {
+bool Hasher::init(size_t alloc_size, uint32_t table_size) {
     if (Gseg == NULL || alloc_size < sizeof(Segment)) {
         return false;
     }

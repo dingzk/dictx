@@ -14,7 +14,7 @@
 #define STORAGE_FACTOR              (1)
 #define MEM_ALIGNMENT               8
 #define MEM_ALIGNMENT_MASK          ~(MEM_ALIGNMENT - 1)
-#define MEM_ALIGNED_SIZE(x)         ((int)((x) + MEM_ALIGNMENT - 1) & (MEM_ALIGNMENT_MASK))
+#define MEM_ALIGNED_SIZE(x)         ((size_t)((x) + MEM_ALIGNMENT - 1) & (MEM_ALIGNMENT_MASK))
 #define MEM_MIN_BLOCK_SIZE          128
 #define MEM_TRUE_SIZE(x)            ((x < MEM_MIN_BLOCK_SIZE)? (MEM_MIN_BLOCK_SIZE) : (MEM_ALIGNED_SIZE(x)))
 
@@ -94,10 +94,10 @@ typedef struct {
 } Hash;
 
 typedef struct {
-    uint32_t size;
-    volatile uint32_t pos;
-    uint32_t free;
-    uint32_t user_app_pos;
+    size_t size;
+    volatile size_t pos;
+    size_t free;
+    size_t user_app_pos;
 } Segment;
 
 class Hasher {
@@ -113,7 +113,7 @@ private:
 
 private:
 
-    void *alloc_mem(uint32_t size);
+    void *alloc_mem(size_t size);
 
     Hval *make_hval(const char *data, uint32_t data_len);
 
@@ -125,7 +125,7 @@ private:
 public:
     Hash *getHashAddr();
 
-    bool init(uint32_t alloc_size, uint32_t table_size);
+    bool init(size_t alloc_size, uint32_t table_size);
 
     bool hash_delete_bucket(Hash *ht, const char *key, uint32_t len);
 
@@ -173,7 +173,7 @@ public:
 
     bool Hinit(uint32_t requested_size);
 
-    bool Hinit(uint32_t key_num, uint32_t value_size);
+    bool Hinit(uint32_t key_num, size_t value_size);
 
     bool Set(const std::string &key, const std::string &value);
 
@@ -294,20 +294,20 @@ static inline unsigned int align_size(uint32_t size) {
 //}
 
 template<class Alloc>
-bool HashTable<Alloc>::Hinit(uint32_t table_size, uint32_t v_size) {
+bool HashTable<Alloc>::Hinit(uint32_t table_size, size_t v_size) {
     if (!table_size || !v_size) return false;
     m_readonly = false;
 
     // Avoid Hash Collisions
-    int real_size = align_size(table_size);
+    uint32_t real_size = align_size(table_size);
     if (!(table_size & ~(real_size << 1))) {
         real_size <<= 1;
     }
 
-    uint32_t requested_size =
+    size_t requested_size =
             sizeof(Segment) + sizeof(Hash) + real_size * (sizeof(uint32_t) + sizeof(Bucket) + sizeof(Hval)) +
             MEM_ALIGNED_SIZE(v_size);
-    uint32_t alloc_size = MEM_TRUE_SIZE(requested_size);
+    size_t alloc_size = MEM_TRUE_SIZE(requested_size);
     Gseg = (Segment *) m_allocator->OpenW(alloc_size);
 
     m_hasher = std::make_shared<Hasher>(Gseg);
