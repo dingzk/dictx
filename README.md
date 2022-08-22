@@ -24,9 +24,9 @@ extension=dictx.so
 > 如果词典比较大，可能会导致php-fpm启动速度较慢，可以实际测试。（不推荐这种办法，可以见下面，直接代码按需加载）
 ```c++
 //支持逗号分割多个具体词典
-dictx.full_path_list="/data1/apache2/config/dict/all_exempt.dict"
+dictx.full_path_list="/foo/bar/dict/all_exempt.dict"
 // 支持配置确定的词典目录
-dictx.directory = "/data1/apache2/config/dict/"
+dictx.directory = "/foo/bar/dict/"
 // 词典文件务必以.dict文件名结尾，以免误加载其他东西
 ```
 > PHP example:
@@ -35,7 +35,7 @@ dictx.directory = "/data1/apache2/config/dict/"
 // find($key [, $noreload = 0]); //$noreload默认为0代表会自动触发词典更新机制，传1不触发词典更新机制
 
 // 标准用法如下：
-$dict = new Dictx("/data1/apache2/config/dict/all_exempt.dict");
+$dict = new Dictx("/foo/bar/dict/all_exempt.dict");
 $b = $dict->find("1004891963"); // 没有加载过的词典这里会主动触发加载，
 // 不管参数怎么传find之前自动强制加载词典(建议性锁)，已经加载过不会重复加载
 var_dump($b);
